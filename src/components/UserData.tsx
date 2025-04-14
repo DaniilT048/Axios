@@ -20,14 +20,14 @@ export default function UserData(): ReactElement {
     const [userData, setUserData] = useState<User[] | null>(null);
     const[count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);;
 
     const handleShowMoreUser = ():void =>{
         setCount (prev => ( prev >= 10 ? 1 : prev + 2));
     }
 
     useEffect((): void => {
-            const axiosUser = async (): Promise<void> => {
+            const getUsers = async (): Promise<void> => {
                 setLoading(true);
                 setError(null);
                 try {
@@ -35,11 +35,9 @@ export default function UserData(): ReactElement {
                     setUserData(response.data);
                 } catch (err: unknown) {
                     if (err instanceof Error) {
-                        // @ts-ignore
                         setError(err.message);
                         setUserData(null);
                     } else {
-                        // @ts-ignore
                         setError("Something went wrong");
                     }
 
@@ -47,7 +45,7 @@ export default function UserData(): ReactElement {
                     setLoading(false);
                 }
             }
-            axiosUser();
+            getUsers();
         },
         []);
 
