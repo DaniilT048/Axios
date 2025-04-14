@@ -3,6 +3,7 @@ import {ReactElement, useEffect, useState} from "react";
 import Card from "./Card.tsx";
 import { LuAccessibility } from "react-icons/lu";
 import { WiAlien } from "react-icons/wi";
+import { MdError } from "react-icons/md";
 
 type User = {
     id: number;
@@ -47,9 +48,9 @@ export default function UserData(): ReactElement {
     return (
         <>
             {loading ? (
-                <LuAccessibility style={{fontSize: 56}} />
+                <LuAccessibility style={{fontSize: 56}}/>
             ) : error ? (
-                <p>{error}</p>
+                <MdError style={{fontSize: 56}}/>
             ): userData ? (<div className='usersCard'>{
                 userData.slice(0, count).map(user => (
                     <Card key = {user.id}>
