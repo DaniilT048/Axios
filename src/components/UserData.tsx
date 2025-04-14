@@ -4,12 +4,12 @@ import Card from "./Card.tsx";
 
 export default function UserData(): ReactElement {
     const [userData, setUserData] = useState(null);
-    const[userId, setUserId] = useState(1);
+    const[count, setCount] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleMoreUser = ():void =>{
-        setUserId(userId + 1);
+        setCount (prev => ( prev >= 10 ? 1 : prev + 1));
     }
 
     useEffect(():void => {
@@ -17,16 +17,14 @@ export default function UserData(): ReactElement {
             setLoading(true);
             setError(null);
         try{
-            const response= await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+            const response= await axios.get(`https://jsonplaceholder.typicode.com/users/`);
             setUserData(response.data);
             console.log(response.data);
         }catch (err: unknown){
             if (err instanceof Error){
-                // @ts-ignore
                 setError(err.message);
                 setUserData(null)
             }else{
-                // @ts-ignore
                 setError('Something went wrong');
             }
 
@@ -35,7 +33,7 @@ export default function UserData(): ReactElement {
         }
         }
         axiosUser();
-    }, [userId]);
+    }, []);
 
     return (
         <>
@@ -43,11 +41,14 @@ export default function UserData(): ReactElement {
                 <p>Loading...</p>
             ) : error ? (
                 <p>{error}</p>
-            ): userData ? (
-                <Card>
-                    <h3>{userData.name}</h3>
-                    <p>{userData.phone}</p>
-                </Card>
+            ): userData ? (<div className='usersCard'>{
+                userData.slice(0, count).map(user => (
+                    <Card key = {user.id}>
+                        <h3>{user.name}</h3>
+                        <p>{user.phone}</p>
+                    </Card>
+                ))}
+                </div>
             ): null}
             <button onClick={handleMoreUser}>Show more User's</button>
         </>

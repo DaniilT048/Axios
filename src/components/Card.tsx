@@ -8,3 +8,4 @@ type CardProps = {
 export default function Card ({children}:CardProps): ReactElement {
     return <div className='card'>{children}</div>
 }
+

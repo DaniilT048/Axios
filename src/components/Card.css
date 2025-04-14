@@ -5,3 +5,10 @@
     margin: 15px;
     background-color: #0000FF;
 }
+
+.usersCard{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+}
