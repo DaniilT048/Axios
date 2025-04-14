@@ -4,6 +4,7 @@
     border-radius: 15px;
     margin: 15px;
     background-color: #0000FF;
+    height: 350px;
 }
 
 .usersCard{
@@ -11,4 +12,6 @@
     flex-direction: row;
     flex: 1;
     flex-wrap: wrap;
+    justify-content: space-between;
+
 }
