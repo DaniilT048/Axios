@@ -1,9 +1,16 @@
 import axios from "axios";
 import {ReactElement, useEffect, useState} from "react";
 import Card from "./Card.tsx";
+import { LuAccessibility } from "react-icons/lu";
+
+type User = {
+    id: number;
+    name: string;
+    phone: string;
+};
 
 export default function UserData(): ReactElement {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState<User[] | null>(null);
     const[count, setCount] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -19,13 +26,14 @@ export default function UserData(): ReactElement {
         try{
             const response= await axios.get(`https://jsonplaceholder.typicode.com/users/`);
             setUserData(response.data);
-            console.log(response.data);
-        }catch (err: unknown){
-            if (err instanceof Error){
+        }catch (err: unknown) {
+            if (err instanceof Error) {
+                // @ts-ignore
                 setError(err.message);
-                setUserData(null)
-            }else{
-                setError('Something went wrong');
+                setUserData(null);
+            } else {
+                // @ts-ignore
+                setError("Something went wrong");
             }
 
         }finally {
@@ -38,7 +46,7 @@ export default function UserData(): ReactElement {
     return (
         <>
             {loading ? (
-                <p>Loading...</p>
+                <LuAccessibility style={{fontSize: 56}} />
             ) : error ? (
                 <p>{error}</p>
             ): userData ? (<div className='usersCard'>{
