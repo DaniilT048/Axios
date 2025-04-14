@@ -7,18 +7,22 @@ export default function UserData(): ReactElement {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    console.log(setUserId);
-
     useEffect(():void => {
         const axiosUser = async ():Promise<void> =>{
             setLoading(true);
             setError(null);
         try{
-            const response= await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+            const response= await axios.get(`https://jsonplaceholder.typicode.com/users/`);
             setUserData(response.data);
-        }catch (err){
-            // setError(err.message);
-            setUserData(null)
+            console.log(response.data);
+        }catch (err: unknown){
+            if (err instanceof Error){
+                setError(err.message);
+                setUserData(null)
+            }else{
+                setError('Something went wrong');
+            }
+
         }finally {
             setLoading(false);
         }
@@ -40,3 +44,4 @@ export default function UserData(): ReactElement {
         </>
     )
 }
+
