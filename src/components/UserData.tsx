@@ -2,6 +2,7 @@ import axios from "axios";
 import {ReactElement, useEffect, useState} from "react";
 import Card from "./Card.tsx";
 import { LuAccessibility } from "react-icons/lu";
+import { WiAlien } from "react-icons/wi";
 
 type User = {
     id: number;
@@ -52,6 +53,7 @@ export default function UserData(): ReactElement {
             ): userData ? (<div className='usersCard'>{
                 userData.slice(0, count).map(user => (
                     <Card key = {user.id}>
+                        <WiAlien style={{fontSize: 80}}/>
                         <h3>{user.name}</h3>
                         <p>{user.phone}</p>
                     </Card>
